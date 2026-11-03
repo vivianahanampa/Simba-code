@@ -1,0 +1,10 @@
+{
+ "_about": "Format example with made-up numbers. One key per scorer; inside it one key per trial number, each a list of [onset, offset] bouts (inclusive, 0-based frames). An empty list = scored, none of the behavior. Pick the scorer with --scorer.",
+ "rater1": {
+  "101": [[120, 185], [940, 1002], [2210, 2236]],
+  "102": []
+ },
+ "rater2": {
+  "101": [[118, 190], [945, 1000]]
+ }
+}

@@ -1,0 +1,6 @@
+# Lab scoring data stays local
+*_sheet_bouts.json
+*.zip
+__pycache__/
+*.pyc
+.DS_Store
