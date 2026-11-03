@@ -12,6 +12,7 @@ Built for: 2 mice × 11 body parts (22 DeepLabCut keypoints), classic (non-multi
 | `make_targets_inserted.py` | Writes bouts from a JSON file into SimBA's `targets_inserted` files, **one behavior per run**, keeping the labels of the other behaviors. Held-out trials go to separate folders so they're never trained on. |
 | `evaluate_simba_test_videos.py` | Scores SimBA's predictions on the held-out trials: precision, recall, F1, bout counts and total time per video, plus an optional threshold sweep. |
 | `example_bouts.json` | The label format (made-up numbers). |
+| `flee_sheet_bouts.json` | Our Flee annotations from two raters (keys `Nick`, `HP`; `_about` explains the rest). |
 | `SimBA_new_project_recipe.md` | Step-by-step rebuild of a SimBA project with the fixes below (Attack). |
 | `SimBA_flee_recipe.md` | Adding a second behavior (Flee) to the same project. |
 
@@ -38,7 +39,7 @@ One key per scorer, then one key per trial number, each with `[onset, offset]` b
 {"rater1": {"101": [[120, 185], [940, 1002]], "102": []}}
 ```
 
-The lab's own scoring files (`*_sheet_bouts.json`) are not in this repo.
+Our Flee annotations are in `flee_sheet_bouts.json`; the Attack annotations are not in this repo.
 
 ## Lessons learned
 

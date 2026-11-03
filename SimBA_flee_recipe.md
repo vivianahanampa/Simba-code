@@ -11,7 +11,7 @@ recipe step:   1  2  3  4  5  6  7  8 | 9  10  11  12
 
 | What | Where |
 |---|---|
-| Flee bouts from the sheet's **Flee** tab (two raters) | `flee_sheet_bouts.json` (not in the public repo; format: `example_bouts.json`) |
+| Flee bouts from the sheet's **Flee** tab (two raters) | `flee_sheet_bouts.json` (in this repo) |
 | Labels script (**new version**, keeps Attack) | `make_targets_inserted.py` (replace the old one) |
 | Evaluation script (same as before) | `evaluate_simba_test_videos.py` |
 
@@ -34,7 +34,7 @@ and paste it next to itself, renamed **`targets_inserted_BACKUP_attack`**.
 ```powershell
 conda activate simba
 cd "C:\path\to\simba-checks"
-python simba_tools/make_targets_inserted.py --config "C:\path\to\projects\SDS_version4\project_folder\project_config.ini" --labels simba_tools/flee_sheet_bouts.json --scorer rater1 --behavior Flee --holdout 778 784 787
+python simba_tools/make_targets_inserted.py --config "C:\path\to\projects\SDS_version4\project_folder\project_config.ini" --labels simba_tools/flee_sheet_bouts.json --scorer Nick --behavior Flee --holdout 778 784 787
 ```
 
 ➡️ Keep `--holdout 778 784 787`, the **same** test trials as Attack. Held-out trials are shared by every behavior in a project.
@@ -115,4 +115,4 @@ python simba_tools/evaluate_simba_test_videos.py --project "C:\path\to\projects\
 ## 🔁 Afterwards
 
 - ↩️ Move `Trial 786…csv` back into `targets_inserted`.
-- Want the rater's uncertain (**"?"**) bouts counted as flee? Put them under a second scorer key (we used `rater1_with_unsure`), re-run step B with that `--scorer`, then D–F.
+- Want the rater's uncertain (**"?"**) bouts counted as flee? Put them under a second scorer key (`Nick_with_unsure` in `flee_sheet_bouts.json`), re-run step B with that `--scorer`, then D–F.
