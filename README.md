@@ -2,7 +2,7 @@
 
 Helper scripts and step-by-step recipes for training [SimBA](https://github.com/sgoldenlab/simba) behavior classifiers when the hand-scored labels already live in a spreadsheet.
 
-Built for: 2 mice × 11 body parts (22 DeepLabCut keypoints), classic (non-multi-animal) tracking, SimBA 5.4.4 on Windows, 30 fps. Behaviors so far: **Attack**, then **Flee**.
+Built for: 2 mice × 11 body parts (22 DeepLabCut keypoints), classic (non-multi-animal) tracking, SimBA 5.4.4 on Windows, 30 fps. Behaviors so far: **Attack**, **Flee**, then **FightBack**.
 
 ## What's here
 
@@ -13,6 +13,7 @@ Built for: 2 mice × 11 body parts (22 DeepLabCut keypoints), classic (non-multi
 | `evaluate_simba_test_videos.py` | Scores SimBA's predictions on the held-out trials: precision, recall, F1, bout counts and total time per video, plus an optional threshold sweep. |
 | `example_bouts.json` | The label format (made-up numbers). |
 | `flee_sheet_bouts.json` | Our Flee annotations from two raters (keys `Nick`, `HP`; `_about` explains the rest). |
+| `fight_sheet_bouts.json` | Our FightBack annotations from two raters (keys `HP`, used for training, and `VH`; `_about` has the command and the trials to leave out). |
 | `SimBA_new_project_recipe.md` | Step-by-step rebuild of a SimBA project with the fixes below (Attack). |
 | `SimBA_flee_recipe.md` | Adding a second behavior (Flee) to the same project. |
 
@@ -39,7 +40,7 @@ One key per scorer, then one key per trial number, each with `[onset, offset]` b
 {"rater1": {"101": [[120, 185], [940, 1002]], "102": []}}
 ```
 
-Our Flee annotations are in `flee_sheet_bouts.json`; the Attack annotations are not in this repo.
+Our Flee and FightBack annotations are in `flee_sheet_bouts.json` and `fight_sheet_bouts.json`; the Attack annotations are not in this repo.
 
 ## Lessons learned
 
@@ -48,3 +49,4 @@ Our Flee annotations are in `flee_sheet_bouts.json`; the Attack annotations are 
 - **Pick the threshold and minimum bout length without looking at the held-out trials**, or the test score is optimistic.
 - **Short behaviors need a short minimum bout.** 500 ms worked for Attack but would delete many Flee bouts; use ~100 ms.
 - **`class_weights = balanced` does nothing after random undersampling at 1.0**: the classes are already 1:1.
+- **Rare behaviors: don't undersample 1:1.** With little of the behavior, a ratio of 1.0 throws away almost every negative frame, so the model rarely sees look-alikes (for Flee: attacks) and over-calls. Ratio 5 took our Flee model from F1 0.38 to 0.48 and cut its flee time from 57 s to 22 s.

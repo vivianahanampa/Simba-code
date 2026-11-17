@@ -69,13 +69,16 @@ python simba_tools/make_targets_inserted.py --config "C:\path\to\projects\SDS_ve
 
 ## Step D: Train the Flee model
 
-**Train machine model tab → SETTINGS**: same as Attack (recipe step 10), but change **one** thing:
+**Train machine model tab → SETTINGS**: same as Attack (recipe step 10), but change **two** things:
 
 | Setting | Value |
 |---|---|
 | **Behavior** | **`Flee`** |
-| everything else | same as Attack: RF, 2000, sqrt, gini, 0.2, BOUTS, leaf 1, random undersample 1.0, class weights balanced |
+| **Random undersample ratio** | **`5`** (not 1.0) |
+| everything else | same as Attack: RF, 2000, sqrt, gini, 0.2, BOUTS, leaf 1, class weights balanced |
 | SHAP | ⬜ off for now |
+
+⚠️ **Why 5:** flee is rare (~45 s in the training trials). At 1.0 SimBA keeps only as many non-flee frames as flee frames (~3.5% of them), so it almost never sees fast-but-not-flee moments like attacks, and it calls flee everywhere. Our first Flee model (1.0) got F1 0.30 with 5× too much flee. Rebuilt on trial 778: ratio 1.0 → F1 0.38, 57 s of flee; **ratio 5 → F1 0.48, 22 s** (the rater marked 16 s); ratio 10 → 0.43; no undersampling → 0.35.
 
 **SAVE SETTINGS (GLOBAL ENVIRONMENT)** → **TRAIN SINGLE MODEL (GLOBAL ENVIRONMENT)**.
 
